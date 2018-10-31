@@ -29,13 +29,18 @@ SOURCES += \
         mainwindow.cpp \
     gamewidget.cpp \
     brique.cpp \
-    coloredbrique.cpp
+    coloredbrique.cpp \
+    player.cpp \
+    ball.cpp
 
 HEADERS += \
         mainwindow.h \
     gamewidget.h \
     brique.h \
-    coloredbrique.h
+    coloredbrique.h \
+    player.h \
+    ball.h \
+    idrawable.h
 
 FORMS += \
         mainwindow.ui

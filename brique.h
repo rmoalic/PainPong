@@ -1,18 +1,21 @@
 #ifndef BRIQUE_H
 #define BRIQUE_H
+#include "idrawable.h"
 #include <QRect>
 #include <QString>
 #include <QColor>
+#include <QPainter>
 
-class Brique
+class Brique : public IDrawable
 {
 public:
     Brique(int, int, int, int, int);
     const QRect getRepr();
     int getValue();
     virtual QString getDestroyedText();
+    void draw(QPainter* paint);
     virtual ~Brique();
-private:
+protected:
     QRect repr;
     int value;
 };

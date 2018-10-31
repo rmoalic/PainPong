@@ -16,6 +16,13 @@ int Brique::getValue()
     return this->value;
 }
 
+void Brique::draw(QPainter* paint) {
+    QPainterPath path;
+    path.addRect(repr);
+    paint->setPen(Qt::NoPen);
+    paint->fillPath(path, QBrush(Qt::black));
+}
+
 QString Brique::getDestroyedText()
 {
     return "Brique destroyed";

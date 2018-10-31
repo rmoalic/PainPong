@@ -12,6 +12,14 @@ QColor ColoredBrique::getColor()
     return this->color;
 }
 
+void ColoredBrique::draw(QPainter* paint) {
+    QPainterPath path;
+    path.addRect(repr);
+    paint->setPen(Qt::NoPen);
+    paint->fillPath(path, QBrush(color));
+}
+
+
 QString ColoredBrique::getDestroyedText()
 {
     return "ColorBrique destroyed";
