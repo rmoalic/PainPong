@@ -31,7 +31,9 @@ SOURCES += \
     brique.cpp \
     coloredbrique.cpp \
     player.cpp \
-    ball.cpp
+    ball.cpp \
+    gamelogic.cpp \
+    scoreboard.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -40,7 +42,9 @@ HEADERS += \
     coloredbrique.h \
     player.h \
     ball.h \
-    idrawable.h
+    idrawable.h \
+    gamelogic.h \
+    scoreboard.h
 
 FORMS += \
         mainwindow.ui

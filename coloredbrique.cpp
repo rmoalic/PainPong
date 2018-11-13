@@ -13,6 +13,7 @@ QColor ColoredBrique::getColor()
 }
 
 void ColoredBrique::draw(QPainter* paint) {
+    color.setRgb((color.red() + 17) % 254, (color.green() + 24) % 254 , (color.blue() + 39) % 254);
     QPainterPath path;
     path.addRect(repr);
     paint->setPen(Qt::NoPen);

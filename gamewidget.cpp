@@ -33,7 +33,7 @@ void GameWidget::paintEvent(QPaintEvent * )
     this->ball->nextPos();
     this->ball->draw(&painter);
 
-    painter.rotate(rotate++);
+    //painter.rotate(rotate++);
     std::array<Brique*,3>::iterator myit;
     for(myit = briques->begin();
             myit != briques->end();
