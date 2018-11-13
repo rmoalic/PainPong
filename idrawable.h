@@ -4,7 +4,7 @@
 
 class IDrawable {
 public:
-    virtual ~IDrawable() {};
+    virtual ~IDrawable() = 0;
     virtual void draw(QPainter* paint) = 0;
 };
 
