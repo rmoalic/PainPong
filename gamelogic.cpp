@@ -25,6 +25,9 @@ void GameLogic::checkCollisionBallPlayer()
     if(b1->getPos().ry() >= 0 && b1->getPos().ry() <= 5)
     {
         if(b1->getPos().rx() >= p1->getRacketPosition() && b1->getPos().rx() <= p1->getRacketPosition() + p1->getRacketSize())
+        {
+
+        }
     }
 }
 

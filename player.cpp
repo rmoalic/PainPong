@@ -31,6 +31,6 @@ int Player::getRacketPosition() {
     return racketPosition;
 }
 
-QSize Player::getRaketSize() {
+QSize Player::getRacketSize() {
     return QSize(80, 20);
 }

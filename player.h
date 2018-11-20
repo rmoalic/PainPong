@@ -14,7 +14,7 @@ public:
     void draw(QPainter* paint);
     Position getBoardPosition();
     int getRacketPosition();
-    QSize getRaketSize();
+    QSize getRacketSize();
 
 private:
     int score;
