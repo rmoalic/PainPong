@@ -21,7 +21,11 @@ void Ball::nextPos() {
 
 void Ball::draw(QPainter* paint) {
     QPainterPath path;
-    path.addEllipse(pos.x(), pos.y(), 15, 15);
+    path.addEllipse(pos.x(), pos.y(), 25, 25);
     paint->setPen(Qt::NoPen);
-    paint->fillPath(path, QBrush(Qt::green));
+    paint->fillPath(path, QBrush(QColor(155,0,0)));
+
+    path.addEllipse(pos.x()+5, pos.y()+5, 8, 8);
+    paint->setPen(Qt::NoPen);
+    paint->fillPath(path, QBrush(QColor(255,0,0)));
 }

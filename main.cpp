@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "constantes.h"
 #include "gamewidget.h"
 #include <QApplication>
 #include <QtDebug>
@@ -13,6 +14,7 @@ int main(int argc, char *argv[])
     a.setApplicationName(APP_NAME);
     a.setApplicationVersion(APP_VERSION);
     MainWindow w;
+    w.setBaseSize(QSize(WINDOW_WIDTH, WINDOW_HEIGHT));
     w.show();
     w.setWindowTitle(APP_NAME);
 

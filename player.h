@@ -8,9 +8,13 @@ public:
     enum Position {TOP, BOTTOM};
     Player(Position boardPosition);
 
+    void moveLeft();
+    void moveRight();
+
     void draw(QPainter* paint);
     Position getBoardPosition();
     int getRacketPosition();
+    QSize getRaketSize();
 
 private:
     int score;
