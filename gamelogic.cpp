@@ -1,4 +1,5 @@
 #include "gamelogic.h"
+#include <QtDebug>
 
 GameLogic::GameLogic()
 {
@@ -8,7 +9,8 @@ GameLogic::GameLogic()
     this->b1 = new Ball(QPoint(1,1), 1.0, 90.0);
     this->b2 = new Ball(QPoint(1,2), 1.0, 90.0);
     this->score_board = new ScoreBoard();
-    this->timer->setInterval()
+    this->timer->setInterval(100);
+    this->timer->start();
 }
 
 void GameLogic::tick()
@@ -17,6 +19,7 @@ void GameLogic::tick()
     GameLogic::checkCollisionBallBrique();
     GameLogic::checkCollisionBallWall();
     GameLogic::checkCollisionBallVoid();
+    qDebug() << "check";
 }
 
 void GameLogic::checkCollisionBallPlayer()
@@ -24,7 +27,7 @@ void GameLogic::checkCollisionBallPlayer()
     //Collision b1 p1
     if(b1->getPos().ry() >= 0 && b1->getPos().ry() <= 5)
     {
-        if(b1->getPos().rx() >= p1->getRacketPosition() && b1->getPos().rx() <= p1->getRacketPosition() + p1->getRacketSize())
+        if(b1->getPos().rx() >= p1->getRacketPosition() && b1->getPos().rx() <= p1->getRacketPosition() + p1->getRacketSize().rwidth())
         {
 
         }

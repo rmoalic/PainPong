@@ -12,7 +12,7 @@
 class GameLogic
 {
 public:
-    GameLogic(QRect windowRect);
+    GameLogic();
 
 private:
     std::vector<Brique*> briques;
