@@ -8,9 +8,10 @@ class Ball : public IDrawable
 {
 public:
     Ball(QPoint initPos, double velocity, double angle);
-    QPoint getPost();
+    QPoint getPos();
     double getVelocity();
     double getAngle();
+    void setVelocity(double v);
     void nextPos();
     void draw(QPainter* paint);
 private:

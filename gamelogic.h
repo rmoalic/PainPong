@@ -4,12 +4,15 @@
 #include "player.h"
 #include "brique.h"
 #include "scoreboard.h"
+#include "gamewidget.h"
+#include "constantes.h"
+#include <QTimer>
 #include <vector>
 
 class GameLogic
 {
 public:
-    GameLogic();
+    GameLogic(QRect windowRect);
 
 private:
     std::vector<Brique*> briques;
@@ -20,7 +23,6 @@ private:
     ScoreBoard* score_board;
     QTimer* timer;
     void tick();
-    void checkCollision();
     void checkCollisionBallPlayer();
     void checkCollisionBallBrique();
     void checkCollisionBallWall();

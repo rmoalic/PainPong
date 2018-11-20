@@ -44,7 +44,8 @@ HEADERS += \
     ball.h \
     idrawable.h \
     gamelogic.h \
-    scoreboard.h
+    scoreboard.h \
+    constantes.h
 
 FORMS += \
         mainwindow.ui
