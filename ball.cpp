@@ -6,7 +6,7 @@ Ball::Ball(QPoint initPos, int velocity, double angle): IDrawable ()
 {
     this->pos = initPos;
     this->velocity = velocity;
-    this->angle = -angle;
+    this->angle = angle;
 }
 
 QPoint Ball::getPos()
@@ -19,7 +19,7 @@ double Ball::getAngle() {
 }
 
 void Ball::setAngle(double angle) {
-    this->angle = -angle;
+    this->angle = angle;
 }
 
 int Ball::getVelocity() {
@@ -32,8 +32,8 @@ void Ball::setVelocity(int v)
 }
 
 void Ball::nextPos() {
-    this->pos.setX(pos.x() + int(round(getVelocity() * cos(getAngle()))));
-    this->pos.setY(pos.y() + int(round(getVelocity() * sin(getAngle()))));
+    this->pos.setX(pos.x() + int(round(getVelocity() * cos(-getAngle()))));
+    this->pos.setY(pos.y() + int(round(getVelocity() * sin(-getAngle()))));
 }
 
 void Ball::draw(QPainter* paint) {
