@@ -8,11 +8,17 @@ Player::Player(Position boardPosition) {
 }
 
 void Player::moveLeft() {
-    this->racketPosition -= 10;
+    if (this->racketPosition - 10 >= 0)
+        this->racketPosition -= 10;
+    else
+        this->racketPosition = 0;
 }
 
 void Player::moveRight() {
-    this->racketPosition += 10;
+    if (this->racketPosition + getRacketSize().width() + 10 < WINDOW_WIDTH)
+        this->racketPosition += 10;
+    else
+        this->racketPosition = WINDOW_WIDTH - getRacketSize().width();
 }
 
 void Player::draw(QPainter* paint) {
