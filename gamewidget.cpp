@@ -29,24 +29,33 @@ GameWidget::GameWidget(QWidget *parent) : QWidget(parent)
     somethread->start();
 }
 
-void GameWidget::keyPressEvent(QKeyEvent * event ) {
-    qDebug() << event;
-    if (event->key() == Qt::Key_A) {
+void GameWidget::keyPressEvent(QKeyEvent* event) {
+    keys[event->key()] = true;
+}
+
+void GameWidget::keyReleaseEvent(QKeyEvent* event) {
+    keys[event->key()] = false;
+}
+
+void GameWidget::move() {
+    if (keys[Qt::Key_A]) {
         p1->moveLeft();
     }
-    if (event->key() == Qt::Key_E) {
+    if (keys[Qt::Key_E]) {
         p1->moveRight();
     }
-    if (event->key() == Qt::Key_Z) {
+    if (keys[Qt::Key_I]) {
         p2->moveLeft();
     }
-    if (event->key() == Qt::Key_R) {
+    if (keys[Qt::Key_P]) {
         p2->moveRight();
     }
 }
 
 void GameWidget::paintEvent(QPaintEvent * )
 {
+    move(); // move the players
+
     QPainter painter(this);
     this->ball->nextPos();
     this->ball->draw(&painter);
