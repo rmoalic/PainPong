@@ -33,7 +33,8 @@ SOURCES += \
     player.cpp \
     ball.cpp \
     gamelogic.cpp \
-    scoreboard.cpp
+    scoreboard.cpp \
+    gamemodel.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -45,7 +46,8 @@ HEADERS += \
     idrawable.h \
     gamelogic.h \
     scoreboard.h \
-    constantes.h
+    constantes.h \
+    gamemodel.h
 
 FORMS += \
         mainwindow.ui

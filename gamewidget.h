@@ -3,27 +3,28 @@
 #include "brique.h"
 #include "ball.h"
 #include "player.h"
+#include "gamemodel.h"
 #include <QWidget>
 #include <QPainter>
 #include <QMap>
-#include <array>
+#include <vector>
 
 class GameWidget : public QWidget
 {
     Q_OBJECT
 public:
-    int rotate = 0;
-    std::array<Brique*,3>* briques;
-    Ball* ball;
-    Player* p1;
-    Player* p2;
     QMap<int, bool> keys;
-
     explicit GameWidget(QWidget *parent = nullptr);
+    void setModel(GameModel* gm);
     QPainter painter();
     void on_pushButton_clicked();
     void paintEvent(QPaintEvent *);
     void move();
+private:
+    GameModel* gm;
+    QThread* somethread;
+    QTimer *timer;
+
 
 protected:
   virtual void  keyPressEvent(QKeyEvent *event);

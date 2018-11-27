@@ -19,6 +19,8 @@ int main(int argc, char *argv[])
     w.show();
     w.setWindowTitle(APP_NAME);
 
+    w.start();
+
     qDebug() << "Starting " + APP_NAME;
     return a.exec();
 }

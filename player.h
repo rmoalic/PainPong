@@ -21,6 +21,7 @@ private:
     Position boardPosition;
     int racketPosition;
     QSize window_size;
+    QSize player_size;
 };
 
 #endif // PLAYER_H

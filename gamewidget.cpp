@@ -14,21 +14,19 @@
 GameWidget::GameWidget(QWidget *parent) : QWidget(parent)
 {
     this->setFocus();
-    this->ball = new Ball(QPoint(240,250), 2, M_PI/2);
-    this->briques = new std::array<Brique*, 3>({new Brique(20,20,80,25,3),new Brique(51,51,80,25,5), new ColoredBrique(81,81,80,25,1,Qt::red)});
+    this->somethread = new QThread();
+    this->timer = new QTimer();
+    this->timer->setInterval(10);
+    this->timer->moveToThread(this->somethread);
 
-    this->p1 = new Player(Player::TOP, this->geometry().size());
-    this->p2 = new Player(Player::BOTTOM, this->geometry().size());
+    connect(this->somethread, SIGNAL(started()), this->timer, SLOT(start()));
+    connect(this->timer, SIGNAL(timeout()), this, SLOT(update()));
+}
 
-
-    QThread* somethread = new QThread();
-    QTimer *timer = new QTimer();
-    timer->setInterval(10);
-    timer->moveToThread(somethread);
-
-    connect(somethread, SIGNAL(started()), timer, SLOT(start()));
-    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
-    somethread->start();
+void GameWidget::setModel(GameModel* gm) {
+    this->gm = gm;
+    if (! this->somethread->isRunning())
+        this->somethread->start();
 }
 
 void GameWidget::keyPressEvent(QKeyEvent* event) {
@@ -40,40 +38,39 @@ void GameWidget::keyReleaseEvent(QKeyEvent* event) {
 }
 
 void GameWidget::move() {
+    gm->b1->nextPos();
+    gm->b2->nextPos();
+
     if (keys[Qt::Key_A]) {
-        p1->moveLeft();
+        gm->p1->moveLeft();
     }
     if (keys[Qt::Key_E]) {
-        p1->moveRight();
+        gm->p1->moveRight();
     }
     if (keys[Qt::Key_I]) {
-        p2->moveLeft();
+        gm->p2->moveLeft();
     }
     if (keys[Qt::Key_P]) {
-        p2->moveRight();
+        gm->p2->moveRight();
     }
 }
 
 void GameWidget::paintEvent(QPaintEvent * )
 {
-    move(); // move the players
-    qDebug() << this->size();
+    move(); // move the players and balls
     QPainter painter(this);
-    this->ball->nextPos();
-    this->ball->draw(&painter);
 
-    std::array<Brique*,3>::iterator myit;
-    for(myit = briques->begin();
-            myit != briques->end();
+    gm->p1->draw(&painter);
+    gm->p2->draw(&painter);
+
+    gm->b1->draw(&painter);
+    gm->b2->draw(&painter);
+    std::vector<Brique*>::iterator myit;
+    for(myit = gm->briques.begin();
+            myit != gm->briques.end();
             myit++)
     {
         (*myit)->draw(&painter);
-        //qDebug() << (*myit)->getDestroyedText();
     }
-
-    this->p1->draw(&painter);
-    this->p2->draw(&painter);
-
-    //qDebug() << "Draw";
 }
 
