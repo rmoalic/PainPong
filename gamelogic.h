@@ -9,10 +9,11 @@
 #include <QTimer>
 #include <vector>
 
-class GameLogic
+class GameLogic : public QObject
 {
 public:
     GameLogic();
+    ~GameLogic();
 
 private:
     std::vector<Brique*> briques;
@@ -22,11 +23,14 @@ private:
     Ball* b2;
     ScoreBoard* score_board;
     QTimer* timer;
-    void tick();
     void checkCollisionBallPlayer();
-    void checkCollisionBallBrique();
     void checkCollisionBallWall();
     void checkCollisionBallVoid();
+    void checkCollisionBallBrique(Brique*);
+    std::vector<Brique*> initBriques();
+
+private slots:
+    void tick();
 };
 
 #endif // GAMELOGIC_H
