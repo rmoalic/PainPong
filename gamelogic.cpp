@@ -9,11 +9,11 @@ GameLogic::GameLogic(QSize window_size, GameModel* gm) : QObject ()
     this->window_size = window_size;
     this->gm = gm;
     this->timer = new QTimer();
-    QThread* somethread = new QThread();
+    this->somethread = new QThread(this);
     this->timer->setInterval(100);
     timer->moveToThread(somethread);
     connect(somethread, SIGNAL(started()), timer, SLOT(start()));
-    connect(timer, &QTimer::timeout, this, &GameLogic::tick);
+    connect(timer, SIGNAL(timeout()), this, SLOT(tick()));
     somethread->start();
 }
 
@@ -21,6 +21,8 @@ GameLogic::~GameLogic()
 {
     this->timer->stop();
     delete timer;
+    this->somethread->exit();
+    delete somethread;
 }
 
 bool collideBallPlayer(Ball* b, Player* p)
@@ -96,5 +98,4 @@ void GameLogic::tick()
     {
         GameLogic::checkCollisionBallBrique(*it);
     }
-    qDebug() << "check";
 }

@@ -8,15 +8,18 @@
 #include "gamemodel.h"
 #include <QTimer>
 #include <vector>
+#include <QObject>
 
 class GameLogic : public QObject
 {
+    Q_OBJECT
 public:
     GameLogic(QSize, GameModel*);
     ~GameLogic();
 
 private:
     QTimer* timer;
+    QThread* somethread;
     QSize window_size;
     GameModel* gm;
     void checkCollisionBallPlayer();

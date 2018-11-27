@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::start() {
     this->model = new GameModel(ui->widget->size());
-    GameLogic gl(ui->widget->size(), model);
+    this->logic = new GameLogic(ui->widget->size(), model);
     ui->widget->setModel(model);
 }
 
@@ -20,4 +20,5 @@ MainWindow::~MainWindow()
 {
     delete ui;
     delete model;
+    delete logic;
 }
