@@ -6,7 +6,7 @@ class Player : public IDrawable
 {
 public:
     enum Position {TOP, BOTTOM};
-    Player(Position boardPosition);
+    Player(Position boardPosition, QSize window_size);
 
     void moveLeft();
     void moveRight();
@@ -20,6 +20,7 @@ private:
     int score;
     Position boardPosition;
     int racketPosition;
+    QSize window_size;
 };
 
 #endif // PLAYER_H

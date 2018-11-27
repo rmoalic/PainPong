@@ -8,16 +8,18 @@
 #include <QTimer>
 #include <QThread>
 #include <QKeyEvent>
+#include <QDebug>
 #include <array>
 
 GameWidget::GameWidget(QWidget *parent) : QWidget(parent)
 {
     this->setFocus();
-    this->ball = new Ball(QPoint(240,250), 2, M_PI/6);
+    this->ball = new Ball(QPoint(240,250), 2, M_PI/2);
     this->briques = new std::array<Brique*, 3>({new Brique(20,20,80,25,3),new Brique(51,51,80,25,5), new ColoredBrique(81,81,80,25,1,Qt::red)});
 
-    this->p1 = new Player(Player::TOP);
-    this->p2 = new Player(Player::BOTTOM);
+    this->p1 = new Player(Player::TOP, this->geometry().size());
+    this->p2 = new Player(Player::BOTTOM, this->geometry().size());
+
 
     QThread* somethread = new QThread();
     QTimer *timer = new QTimer();
@@ -55,7 +57,7 @@ void GameWidget::move() {
 void GameWidget::paintEvent(QPaintEvent * )
 {
     move(); // move the players
-
+    qDebug() << this->size();
     QPainter painter(this);
     this->ball->nextPos();
     this->ball->draw(&painter);

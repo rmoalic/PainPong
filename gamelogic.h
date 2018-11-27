@@ -12,17 +12,19 @@
 class GameLogic : public QObject
 {
 public:
-    GameLogic();
-    ~GameLogic();
-
-private:
-    std::vector<Brique*> briques;
     Player* p1;
     Player* p2;
     Ball* b1;
     Ball* b2;
+    std::vector<Brique*> briques;
     ScoreBoard* score_board;
+    GameLogic(QSize);
+    std::vector<IDrawable>* getDrawable();
+    ~GameLogic();
+
+private:
     QTimer* timer;
+    QSize window_size;
     void checkCollisionBallPlayer();
     void checkCollisionBallWall();
     void checkCollisionBallVoid();
