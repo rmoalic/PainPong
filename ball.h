@@ -7,17 +7,17 @@
 class Ball : public IDrawable
 {
 public:
-    Ball(QPoint initPos, int velocity, double angle);
-    QPoint getPos();
-    int getVelocity();
+    Ball(QPointF initPos, double velocity, double angle);
+    QPointF getPos();
+    double getVelocity();
     double getAngle();
     void setAngle(double angle);
-    void setVelocity(int v);
+    void setVelocity(double v);
     void nextPos();
     void draw(QPainter* paint);
 private:
-    QPoint pos;
-    int velocity;
+    QPointF pos;
+    double velocity;
     double angle;
 };
 

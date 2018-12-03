@@ -2,14 +2,14 @@
 #include "constantes.h"
 #include <QRect>
 
-Ball::Ball(QPoint initPos, int velocity, double angle): IDrawable ()
+Ball::Ball(QPointF initPos, double velocity, double angle): IDrawable ()
 {
     this->pos = initPos;
     this->velocity = velocity;
     this->angle = angle;
 }
 
-QPoint Ball::getPos()
+QPointF Ball::getPos()
 {
     return pos;
 }
@@ -22,18 +22,18 @@ void Ball::setAngle(double angle) {
     this->angle = angle;
 }
 
-int Ball::getVelocity() {
+double Ball::getVelocity() {
     return velocity;
 }
 
-void Ball::setVelocity(int v)
+void Ball::setVelocity(double v)
 {
     this->velocity = v;
 }
 
 void Ball::nextPos() {
-    this->pos.setX(pos.x() + int(round(getVelocity() * cos(-getAngle()))));
-    this->pos.setY(pos.y() + int(round(getVelocity() * sin(-getAngle()))));
+    this->pos.setX(pos.x() + (getVelocity() * cos(-getAngle())));
+    this->pos.setY(pos.y() + (getVelocity() * sin(-getAngle())));
 }
 
 void Ball::draw(QPainter* paint) {
