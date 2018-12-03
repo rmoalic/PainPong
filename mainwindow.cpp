@@ -21,4 +21,5 @@ MainWindow::~MainWindow()
     delete ui;
     delete model;
     delete logic;
+    delete ui->widget;
 }

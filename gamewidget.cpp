@@ -2,6 +2,7 @@
 #include "brique.h"
 #include "coloredbrique.h"
 #include "player.h"
+#include "unistd.h"
 #include <QPainter>
 #include <QPaintEvent>
 #include <QtDebug>
@@ -14,13 +15,21 @@
 GameWidget::GameWidget(QWidget *parent) : QWidget(parent)
 {
     this->setFocus();
-    this->somethread = new QThread();
-    this->timer = new QTimer();
+    this->somethread = new QThread(this);
+    this->timer = new QTimer(this->somethread);
     this->timer->setInterval(10);
-    this->timer->moveToThread(this->somethread);
 
     connect(this->somethread, SIGNAL(started()), this->timer, SLOT(start()));
     connect(this->timer, SIGNAL(timeout()), this, SLOT(update()));
+}
+
+GameWidget::~GameWidget()
+{
+    qDebug() << "test";
+    this->timer->stop();
+    this->somethread->exit();
+    delete this->somethread;
+    delete this->timer;
 }
 
 void GameWidget::setModel(GameModel* gm) {

@@ -1,8 +1,10 @@
 #include "gamelogic.h"
+#include "unistd.h"
 #include <algorithm>
 #include <QtDebug>
 #include <QThread>
 #include <vector>
+
 
 GameLogic::GameLogic(QSize window_size, GameModel* gm) : QObject ()
 {
@@ -10,34 +12,35 @@ GameLogic::GameLogic(QSize window_size, GameModel* gm) : QObject ()
     this->gm = gm;
     this->timer = new QTimer();
     this->somethread = new QThread(this);
+    this->somethread->setParent(this);
+    this->timer->setParent(this->somethread);
     this->timer->setInterval(100);
-    timer->moveToThread(somethread);
-    connect(somethread, SIGNAL(started()), timer, SLOT(start()));
-    connect(timer, SIGNAL(timeout()), this, SLOT(tick()));
-    somethread->start();
+    connect(this->somethread, SIGNAL(started()), this->timer, SLOT(start()));
+    connect(this->timer, SIGNAL(timeout()), this, SLOT(tick()));
+    this->somethread->start();
 }
 
 GameLogic::~GameLogic()
 {
     this->timer->stop();
-    delete timer;
     this->somethread->exit();
-    delete somethread;
+    delete this->somethread;
+    delete this->timer;
 }
 
 bool GameLogic::collideBallPlayer(Ball* b, Player* p)
 {
     switch (p->getBoardPosition()) {
     case Player::TOP:
-        return b->getPos().ry() >= 0 &&
+        return b->getPos().ry() >= p->getRacketSize().rheight() - 10 &&
              b->getPos().ry() <= p->getRacketSize().rheight() &&
-             b->getPos().rx() >= p->getRacketPosition() &&
-             b->getPos().rx() <= p->getRacketPosition() + p->getRacketSize().rwidth();
+             b->getPosCenter().rx() >= p->getRacketPosition() &&
+             b->getPosCenter().rx() <= p->getRacketPosition() + p->getRacketSize().rwidth();
     case Player::BOTTOM:
         return b->getPos().ry() + 25 >= this->window_size.rheight() - p->getRacketSize().rheight() &&
-             b->getPos().ry() + 25 <= this->window_size.rheight() &&
-             b->getPos().rx() >= p->getRacketPosition() &&
-             b->getPos().rx() <= p->getRacketPosition() + p->getRacketSize().rwidth();
+             b->getPos().ry() + 25 <= this->window_size.rheight() - p->getRacketSize().rheight() + 10 &&
+             b->getPosCenter().rx() >= p->getRacketPosition() &&
+             b->getPosCenter().rx() <= p->getRacketPosition() + p->getRacketSize().rwidth();
     }
     return false;
 }
@@ -47,22 +50,32 @@ void GameLogic::checkCollisionBallPlayer()
     //Collision b1 p1
     if(collideBallPlayer(gm->b1, gm->p1))
     {
-	gm->b1->setAngle(gm->b1->getAngle() + M_PI);
+        qreal r = gm->b1->getPosCenter().rx() - (gm->p1->getBoardPosition() + gm->p1->getRacketSize().rwidth() / 2);
+        qreal x = gm->p1->getRacketSize().rwidth()*4/sqrt(3);
+        qDebug() << r;
+        qDebug() << x;
+        gm->b1->setAngle(acos(x*r));
     }
     //Collision b2 p1
     if(collideBallPlayer(gm->b2, gm->p1))
     {
-	gm->b2->setAngle(gm->b2->getAngle() + M_PI);
+        qreal r = gm->b2->getPosCenter().rx() - (gm->p1->getBoardPosition() + gm->p1->getRacketSize().rwidth() / 2);
+        qreal x = gm->p1->getRacketSize().rwidth()*4/sqrt(3);
+        gm->b2->setAngle(acos(x*r));
     }
     //Collision b1 p2
     if(collideBallPlayer(gm->b1, gm->p2))
     {
-	gm->b1->setAngle(gm->b1->getAngle() + M_PI);
+        qreal r = gm->b1->getPosCenter().rx() - (gm->p2->getBoardPosition() + gm->p2->getRacketSize().rwidth() / 2);
+        qreal x = gm->p2->getRacketSize().rwidth()*4/sqrt(3);
+        gm->b1->setAngle(acos(x*r));
     }
     //Collision b2 p2
     if(collideBallPlayer(gm->b2, gm->p2))
     {
-	gm->b2->setAngle(gm->b2->getAngle() + M_PI);
+        qreal r = gm->b2->getPosCenter().rx() - (gm->p2->getBoardPosition() + gm->p2->getRacketSize().rwidth() / 2);
+        qreal x = gm->p2->getRacketSize().rwidth()*4/sqrt(3);
+        gm->b2->setAngle(acos(x*r));
     }
 }
 
@@ -70,11 +83,11 @@ void GameLogic::checkCollisionBallWall()
 {
     const int wall_width = 5;
 
-    if(gm->b1->getPos().rx() <= wall_width || gm->b1->getPos().rx() >= window_size.height() - wall_width)
+    if(gm->b1->getPosCenter().rx() <= wall_width || gm->b1->getPosCenter().rx() >= window_size.height() - wall_width)
     {
         gm->b1->setAngle(M_PI - gm->b1->getAngle());
     }
-    if(gm->b2->getPos().rx() <= wall_width || gm->b2->getPos().rx() >= window_size.height() - wall_width)
+    if(gm->b2->getPosCenter().rx() <= wall_width || gm->b2->getPosCenter().rx() >= window_size.height() - wall_width)
     {
         gm->b2->setAngle(M_PI - gm->b2->getAngle());
     }
@@ -82,11 +95,11 @@ void GameLogic::checkCollisionBallWall()
 
 void GameLogic::checkCollisionBallVoid()
 {
-    if(gm->b1->getPos().ry() <= 0 || gm->b2->getPos().ry() <= 0)
+    if(gm->b1->getPosCenter().ry() <= 0 || gm->b2->getPosCenter().ry() <= 0)
     {
 
     }
-    if(gm->b1->getPos().ry() >= window_size.height() || gm->b2->getPos().ry() >= window_size.height())
+    if(gm->b1->getPosCenter().ry() >= window_size.height() || gm->b2->getPosCenter().ry() >= window_size.height())
     {
 
     }

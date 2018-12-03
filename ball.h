@@ -9,6 +9,7 @@ class Ball : public IDrawable
 public:
     Ball(QPointF initPos, double velocity, double angle);
     QPointF getPos();
+    QPointF getPosCenter();
     double getVelocity();
     double getAngle();
     void setAngle(double angle);

@@ -15,6 +15,7 @@ class GameWidget : public QWidget
 public:
     QMap<int, bool> keys;
     explicit GameWidget(QWidget *parent = nullptr);
+    ~GameWidget();
     void setModel(GameModel* gm);
     QPainter painter();
     void on_pushButton_clicked();

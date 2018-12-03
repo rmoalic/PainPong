@@ -14,6 +14,11 @@ QPointF Ball::getPos()
     return pos;
 }
 
+QPointF Ball::getPosCenter()
+{
+    return QPointF(pos.rx() + 25/2, pos.ry() + 25/2);
+}
+
 double Ball::getAngle() {
     return angle;
 }
