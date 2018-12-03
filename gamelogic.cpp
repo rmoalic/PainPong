@@ -25,12 +25,21 @@ GameLogic::~GameLogic()
     delete somethread;
 }
 
-bool collideBallPlayer(Ball* b, Player* p)
+bool GameLogic::collideBallPlayer(Ball* b, Player* p)
 {
-    return b->getPos().ry() >= 0 &&
-           b->getPos().ry() <= p->getRacketSize().rheight() &&
-           b->getPos().rx() >= p->getRacketPosition() &&
-           b->getPos().rx() <= p->getRacketPosition() + p->getRacketSize().rwidth();
+    switch (p->getBoardPosition()) {
+    case Player::TOP:
+        return b->getPos().ry() >= 0 &&
+             b->getPos().ry() <= p->getRacketSize().rheight() &&
+             b->getPos().rx() >= p->getRacketPosition() &&
+             b->getPos().rx() <= p->getRacketPosition() + p->getRacketSize().rwidth();
+    case Player::BOTTOM:
+        return b->getPos().ry() + 25 >= this->window_size.rheight() - p->getRacketSize().rheight() &&
+             b->getPos().ry() + 25 <= this->window_size.rheight() &&
+             b->getPos().rx() >= p->getRacketPosition() &&
+             b->getPos().rx() <= p->getRacketPosition() + p->getRacketSize().rwidth();
+    }
+    return false;
 }
 
 void GameLogic::checkCollisionBallPlayer()
@@ -38,22 +47,22 @@ void GameLogic::checkCollisionBallPlayer()
     //Collision b1 p1
     if(collideBallPlayer(gm->b1, gm->p1))
     {
-
+	gm->b1->setAngle(gm->b1->getAngle() + M_PI);
     }
     //Collision b2 p1
     if(collideBallPlayer(gm->b2, gm->p1))
     {
-
+	gm->b2->setAngle(gm->b2->getAngle() + M_PI);
     }
     //Collision b1 p2
     if(collideBallPlayer(gm->b1, gm->p2))
     {
-
+	gm->b1->setAngle(gm->b1->getAngle() + M_PI);
     }
     //Collision b2 p2
     if(collideBallPlayer(gm->b2, gm->p2))
     {
-
+	gm->b2->setAngle(gm->b2->getAngle() + M_PI);
     }
 }
 
