@@ -1,7 +1,7 @@
 #include "player.h"
 #include "constantes.h"
 #include <QtDebug>
-#define PAS 10
+#define PAS 5
 
 Player::Player(Position boardPosition, QSize window_size) {
     this->window_size = window_size;

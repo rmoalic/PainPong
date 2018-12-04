@@ -9,14 +9,14 @@
 class Brique : public IDrawable
 {
 public:
-    Brique(int, int, int, int, int);
-    const QRect getRepr();
+    Brique(double, double, int, int, int);
+    const QRectF getRepr();
     int getValue();
     virtual QString getDestroyedText();
     void draw(QPainter* paint);
     virtual ~Brique();
 protected:
-    QRect repr;
+    QRectF repr;
     int value;
 };
 

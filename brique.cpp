@@ -1,12 +1,12 @@
 #include "brique.h"
 
-Brique::Brique(int x, int y, int size_x, int size_y, int points)
+Brique::Brique(double x, double y, int size_x, int size_y, int points)
 {
-    this->repr = QRect(x, y, size_x, size_y);
+    this->repr = QRectF(x, y, size_x, size_y);
     this->value= points;
 }
 
-const QRect Brique::getRepr()
+const QRectF Brique::getRepr()
 {
     return this->repr;
 }
