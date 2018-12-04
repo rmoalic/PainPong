@@ -25,7 +25,6 @@ GameWidget::GameWidget(QWidget *parent) : QWidget(parent)
 
 GameWidget::~GameWidget()
 {
-    qDebug() << "test";
     this->timer->stop();
     this->somethread->exit();
     delete this->somethread;

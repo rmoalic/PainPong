@@ -35,7 +35,8 @@ SOURCES += \
     gamelogic.cpp \
     scoreboard.cpp \
     gamemodel.cpp \
-    powerup.cpp
+    powerup.cpp \
+    scoreboardwidget.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -49,7 +50,8 @@ HEADERS += \
     scoreboard.h \
     constantes.h \
     gamemodel.h \
-    powerup.h
+    powerup.h \
+    scoreboardwidget.h
 
 FORMS += \
         mainwindow.ui

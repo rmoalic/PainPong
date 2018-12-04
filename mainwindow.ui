@@ -31,18 +31,26 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="GameWidget" name="widget" native="true">
-      <property name="cursor">
-       <cursorShape>ArrowCursor</cursorShape>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="spacing">
+       <number>0</number>
       </property>
-     </widget>
+      <item>
+       <widget class="ScoreBoardWidget" name="score" native="true">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>25</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="GameWidget" name="widget" native="true"/>
+      </item>
+     </layout>
     </item>
    </layout>
-  </widget>
-  <widget class="QStatusBar" name="statusBar">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
@@ -51,6 +59,12 @@
    <class>GameWidget</class>
    <extends>QWidget</extends>
    <header>gamewidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ScoreBoardWidget</class>
+   <extends>QWidget</extends>
+   <header>scoreboardwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

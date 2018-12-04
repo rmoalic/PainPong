@@ -115,6 +115,7 @@ void GameLogic::tick()
     GameLogic::checkCollisionBallPlayer();
     GameLogic::checkCollisionBallWall();
     GameLogic::checkCollisionBallVoid();
+    gm->score_board->setScore1(gm->score_board->getScore1() + 1);
     std::vector<Brique*>::iterator it;
     for(it = gm->briques.begin(); it != gm->briques.end(); it++)
     {
