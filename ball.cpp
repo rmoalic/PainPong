@@ -4,6 +4,8 @@
 
 Ball::Ball(QPointF initPos, double velocity, double angle): IDrawable ()
 {
+    this->initPos = initPos;
+    this->initAngle = angle;
     this->pos = initPos;
     this->velocity = velocity;
     this->angle = angle;
@@ -25,6 +27,11 @@ double Ball::getAngle() {
 
 void Ball::setAngle(double angle) {
     this->angle = angle;
+}
+
+void Ball::reset() {
+    this->pos = QPointF(this->initPos);
+    this->angle = this->initAngle;
 }
 
 double Ball::getVelocity() {

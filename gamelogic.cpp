@@ -14,7 +14,7 @@ GameLogic::GameLogic(QSize window_size, GameModel* gm) : QObject ()
     this->somethread = new QThread(this);
     this->somethread->setParent(this);
     this->timer->setParent(this->somethread);
-    this->timer->setInterval(35);
+    this->timer->setInterval(40);
     connect(this->somethread, SIGNAL(started()), this->timer, SLOT(start()));
     connect(this->timer, SIGNAL(timeout()), this, SLOT(tick()));
     this->somethread->start();
@@ -80,11 +80,19 @@ void GameLogic::checkCollisionBallWall()
 {
     const int wall_width = 5;
 
-    if(gm->b1->getPos().rx() <= wall_width || gm->b1->getPos().rx() + 25 >= window_size.width() - wall_width)
+    if(gm->b1->getPos().rx() <= wall_width && cos(gm->b1->getAngle()) < 0)
     {
         gm->b1->setAngle(M_PI - gm->b1->getAngle());
     }
-    if(gm->b2->getPos().rx() <= wall_width || gm->b2->getPos().rx() + 25 >= window_size.width() - wall_width)
+    else if(gm->b1->getPos().rx() + 25 >= window_size.width() - wall_width && cos(gm->b1->getAngle()) > 0)
+    {
+        gm->b1->setAngle(M_PI - gm->b1->getAngle());
+    }
+    if(gm->b2->getPos().rx() <= wall_width && cos(gm->b2->getAngle()) < 0)
+    {
+        gm->b2->setAngle(M_PI - gm->b2->getAngle());
+    }
+    else if(gm->b2->getPos().rx() + 25 >= window_size.width() - wall_width && cos(gm->b2->getAngle()) > 0)
     {
         gm->b2->setAngle(M_PI - gm->b2->getAngle());
     }
@@ -92,30 +100,36 @@ void GameLogic::checkCollisionBallWall()
 
 void GameLogic::checkCollisionBallVoid()
 {
-    if(gm->b1->getPosCenter().ry() <= 0 || gm->b2->getPosCenter().ry() <= 0)
+    if(gm->b1->getPosCenter().ry() <= 0 || gm->b1->getPosCenter().ry() >= window_size.height())
     {
-
+        gm->b1->reset();
     }
-    if(gm->b1->getPosCenter().ry() >= window_size.height() || gm->b2->getPosCenter().ry() >= window_size.height())
+    if(gm->b2->getPosCenter().ry() <= 0 || gm->b2->getPosCenter().ry() >= window_size.height())
     {
-
+        gm->b2->reset();
     }
 }
 
 bool collisionBrique(Ball* b, Brique* brique)
 {
-    return b->getPosCenter().rx() >= brique->getRepr().x() &&
-            b->getPosCenter().rx() <= brique->getRepr().x() + brique->getRepr().width() &&
-            b->getPos().ry() >= brique->getRepr().y() &&
-            b->getPos().ry() <= brique->getRepr().y() + brique->getRepr().height();
+    return (b->getPosCenter().ry() - 25/2 >= brique->getRepr().y() || b->getPosCenter().ry() + 25/2 >= brique->getRepr().y()) &&
+            (b->getPos().ry() - 25/2 <= brique->getRepr().y() + brique->getRepr().height() || b->getPos().ry() + 25/2 <= brique->getRepr().y() + brique->getRepr().height()) &&
+            (b->getPosCenter().rx() - 25/2 >= brique->getRepr().x() || b->getPosCenter().rx() + 25/2 >= brique->getRepr().x()) &&
+            (b->getPosCenter().rx() - 25/2 <= brique->getRepr().x() + brique->getRepr().width() || b->getPosCenter().rx() + 25/2 <= brique->getRepr().x() + brique->getRepr().width());
 }
 
 void GameLogic::checkCollisionBallBrique(Brique* brique)
 {
+    //pb: collision sur le côté ou au-dessus/en-dessous
     if(collisionBrique(gm->b1, brique))
     {
-
+        gm->b1->setAngle(M_PI - gm->b1->getAngle());
     }
+    if(collisionBrique(gm->b2, brique))
+    {
+        gm->b2->setAngle(M_PI - gm->b2->getAngle());
+    }
+
 }
 
 void GameLogic::tick()

@@ -13,10 +13,13 @@ public:
     double getVelocity();
     double getAngle();
     void setAngle(double angle);
+    void reset();
     void setVelocity(double v);
     void nextPos();
     void draw(QPainter* paint);
 private:
+    QPointF initPos;
+    double initAngle;
     QPointF pos;
     double velocity;
     double angle;
