@@ -10,7 +10,8 @@
 #include <QThread>
 #include <QKeyEvent>
 #include <QDebug>
-#include <array>
+
+QImage* loadImage(QString path);
 
 GameWidget::GameWidget(QWidget *parent) : QWidget(parent)
 {
@@ -18,6 +19,7 @@ GameWidget::GameWidget(QWidget *parent) : QWidget(parent)
     this->somethread = new QThread(this);
     this->timer = new QTimer(this->somethread);
     this->timer->setInterval(10);
+    this->backgroundImage = loadImage(":/background.png");
 
     connect(this->somethread, SIGNAL(started()), this->timer, SLOT(start()));
     connect(this->timer, SIGNAL(timeout()), this, SLOT(update()));
@@ -29,6 +31,18 @@ GameWidget::~GameWidget()
     this->somethread->exit();
     delete this->somethread;
     delete this->timer;
+    delete this->backgroundImage;
+}
+
+QImage* loadImage(QString path) {
+    QPixmap img(path);
+    return new QImage(img.toImage());
+}
+
+void GameWidget::drawBackground() {
+    QPainter painter(this);
+    QRectF r(0,0,this->size().width(), this->size().height());
+    painter.drawImage(r, *this->backgroundImage);
 }
 
 void GameWidget::setModel(GameModel* gm) {
@@ -66,6 +80,7 @@ void GameWidget::move() {
 void GameWidget::paintEvent(QPaintEvent * )
 {
     move(); // move the players and balls
+    drawBackground();
     QPainter painter(this);
 
     gm->p1->draw(&painter);

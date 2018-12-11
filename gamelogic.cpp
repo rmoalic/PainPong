@@ -124,10 +124,12 @@ void GameLogic::checkCollisionBallBrique(Brique* brique)
     if(collisionBrique(gm->b1, brique))
     {
         gm->b1->setAngle(M_PI - gm->b1->getAngle());
+        gm->score_board->setScore1(gm->score_board->getScore1() + brique->getValue());
     }
     if(collisionBrique(gm->b2, brique))
     {
         gm->b2->setAngle(M_PI - gm->b2->getAngle());
+        gm->score_board->setScore2(gm->score_board->getScore2() + brique->getValue());
     }
 
 }
@@ -137,7 +139,6 @@ void GameLogic::tick()
     GameLogic::checkCollisionBallPlayer();
     GameLogic::checkCollisionBallWall();
     GameLogic::checkCollisionBallVoid();
-    gm->score_board->setScore1(gm->score_board->getScore1() + 1);
     std::vector<Brique*>::iterator it;
     for(it = gm->briques.begin(); it != gm->briques.end(); it++)
     {

@@ -16,6 +16,7 @@ public:
     void reset();
     void setVelocity(double v);
     void nextPos();
+    void setColor(QColor);
     void draw(QPainter* paint);
 private:
     QPointF initPos;
@@ -23,6 +24,7 @@ private:
     QPointF pos;
     double velocity;
     double angle;
+    QColor color;
 };
 
 #endif // BALL_H

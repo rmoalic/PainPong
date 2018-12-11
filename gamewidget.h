@@ -21,11 +21,12 @@ public:
     void on_pushButton_clicked();
     void paintEvent(QPaintEvent *);
     void move();
+    void drawBackground();
 private:
     GameModel* gm;
     QThread* somethread;
     QTimer *timer;
-
+    QImage* backgroundImage;
 
 protected:
   virtual void  keyPressEvent(QKeyEvent *event);
