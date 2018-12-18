@@ -13,7 +13,7 @@ GameLogic::GameLogic(QSize window_size, GameModel* gm) : QObject ()
     this->somethread = new QThread(this);
     this->somethread->setParent(this);
     this->timer->setParent(this->somethread);
-    this->timer->setInterval(40);
+    this->timer->setInterval(10);
     connect(this->somethread, SIGNAL(started()), this->timer, SLOT(start()));
     connect(this->timer, SIGNAL(timeout()), this, SLOT(tick()));
     this->somethread->start();
@@ -121,41 +121,62 @@ void GameLogic::checkCollisionBallVoid()
 bool collisionBrique(Ball* b, Brique* brique)
 {
     return (b->getPosCenter().ry() - 25/2 >= brique->getRepr().y() || b->getPosCenter().ry() + 25/2 >= brique->getRepr().y()) &&
-            (b->getPos().ry() - 25/2 <= brique->getRepr().y() + brique->getRepr().height() || b->getPos().ry() + 25/2 <= brique->getRepr().y() + brique->getRepr().height()) &&
+            (b->getPosCenter().ry() - 25/2 <= brique->getRepr().y() + brique->getRepr().height() || b->getPosCenter().ry() + 25/2 <= brique->getRepr().y() + brique->getRepr().height()) &&
             (b->getPosCenter().rx() - 25/2 >= brique->getRepr().x() || b->getPosCenter().rx() + 25/2 >= brique->getRepr().x()) &&
             (b->getPosCenter().rx() - 25/2 <= brique->getRepr().x() + brique->getRepr().width() || b->getPosCenter().rx() + 25/2 <= brique->getRepr().x() + brique->getRepr().width());
 }
 
 double nextAngle(Ball* b, Brique* br) {
     double ballAngle = atan((br->getRepr().center().ry() - b->getPosCenter().ry()) / (b->getPosCenter().rx() - br->getRepr().center().rx()));
-    ballAngle = (ballAngle < 0) ? M_PI - ballAngle : ballAngle;
-    qDebug() << ballAngle;
-    if(ballAngle < br->getCornerAngle(0)) {
-        if(cos(b->getAngle()) < 0)
-        {
-            qDebug() << "droite";
-            return M_PI - b->getAngle();
-        }
-    }
-    else if(ballAngle < br->getCornerAngle(1)) {
-        if(sin(b->getAngle()) < 0)
-        {
-            qDebug() << "haut";
-            return M_PI/2 + b->getAngle();
-        }
-    }
-    else if(ballAngle < br->getCornerAngle(2)) {
-        if(cos(b->getAngle()) > 0)
-        {
-            qDebug() << "gauche";
-            return M_PI - b->getAngle();
-        }
+    ballAngle = (ballAngle < 0) ? 2*M_PI - ballAngle : ballAngle;
+    if(b->getPosCenter().rx() - br->getRepr().center().rx() < 0) {
+        if(b->getPosCenter().ry() - br->getRepr().center().ry() > 0) ballAngle = M_PI + ballAngle;
+        else ballAngle = M_PI - ballAngle;
     }
     else {
-        if(sin(b->getAngle()) > 0)
+        if(b->getPosCenter().ry() - br->getRepr().center().ry() > 0) ballAngle = 2*M_PI - ballAngle;
+    }
+    qDebug() << ballAngle;
+    double angle = b->getAngle();
+    if(angle < 0) angle = 2*M_PI + angle;
+    if(ballAngle < br->getCornerAngle(0)) {
+        qDebug() << "getCornerAngle(0) " << br->getCornerAngle(0);
+        if(cos(angle) < 0)
+        {
+            qDebug() << "droite";
+            return M_PI - angle;
+        }
+        else return angle;
+    }
+    else if(ballAngle < br->getCornerAngle(1)) {
+        qDebug() << "getCornerAngle(1) " << br->getCornerAngle(1);
+        if(sin(angle) > 0)
+        {
+            qDebug() << "haut";
+            return 2*M_PI - angle;
+        }
+        else return angle;
+    }
+    else if(ballAngle < br->getCornerAngle(2)) {
+        qDebug() << "getCornerAngle(2) " << br->getCornerAngle(2);
+        if(cos(angle) > 0)
+        {
+            qDebug() << "gauche";
+            return M_PI - angle;
+        }
+        else return angle;
+    }
+    else {
+         qDebug() << "getCornerAngle(2) " << br->getCornerAngle(3);
+        if(sin(angle) > 0)
         {
             qDebug() << "bas";
-            return M_PI/2 + b->getAngle();
+            return 2*M_PI - angle;
+        }
+        else
+        {
+            qDebug() << "droite";
+            return M_PI - angle;
         }
     }
 }
@@ -166,22 +187,20 @@ void GameLogic::checkCollisionBallBrique(Brique* brique)
     if(collisionBrique(gm->b1, brique))
     {
         double angle = nextAngle(gm->b1, brique);
+        qDebug() << "nextangle";
+        qDebug() << angle;
         gm->b1->setAngle(angle);
         gm->score_board->setScore1(gm->score_board->getScore1() + brique->getValue());
     }
     if(collisionBrique(gm->b2, brique))
     {
         double angle = nextAngle(gm->b2, brique);
+        qDebug() << "nextangle";
+        qDebug() << angle;
         gm->b2->setAngle(angle);
         gm->score_board->setScore2(gm->score_board->getScore2() + brique->getValue());
 
     }
-    //haut dedans - bas dehors = collision bas de brique
-    //bas dedans - haut dehors = collision haut de brique
-    //gauche dedans - droite dehors = collision droite de brique
-    //droite dedans - gauche dehors = collision gauche de brique
-    
-    // ATTENTION: coin
 }
 
 void GameLogic::tick()
