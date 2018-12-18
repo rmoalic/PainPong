@@ -1,5 +1,6 @@
 #include "player.h"
 #include "constantes.h"
+#include "imageloader.h"
 #include <QtDebug>
 #define PAS 5
 
@@ -8,6 +9,7 @@ Player::Player(Position boardPosition, QSize window_size) {
     this->boardPosition = boardPosition;
     this->racketPosition = 0;
     this->player_size = QSize(80, 20);
+    this->player_sprite = loadImage(":/player.png");
 }
 
 void Player::moveLeft() {
@@ -25,11 +27,8 @@ void Player::moveRight() {
 }
 
 void Player::draw(QPainter* paint) {
-    QPainterPath path;
     QRect rect = QRect(racketPosition, boardPosition == Player::TOP ? 0:window_size.height() - player_size.height(), player_size.width(), player_size.height());
-    path.addRect(rect);
-    paint->setPen(Qt::NoPen);
-    paint->fillPath(path, QBrush(Qt::black));
+    paint->drawImage(rect, *this->player_sprite);
 }
 
 Player::Position Player::getBoardPosition() {

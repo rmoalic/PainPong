@@ -22,6 +22,7 @@ private:
     int racketPosition;
     QSize window_size;
     QSize player_size;
+    QImage* player_sprite;
 };
 
 #endif // PLAYER_H

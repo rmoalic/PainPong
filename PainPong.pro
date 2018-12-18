@@ -37,7 +37,8 @@ SOURCES += \
     gamemodel.cpp \
     powerup.cpp \
     scoreboardwidget.cpp \
-    imageexception.cpp
+    imageexception.cpp \
+    imageloader.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -53,7 +54,8 @@ HEADERS += \
     gamemodel.h \
     powerup.h \
     scoreboardwidget.h \
-    imageexception.h
+    imageexception.h \
+    imageloader.h
 
 FORMS += \
         mainwindow.ui

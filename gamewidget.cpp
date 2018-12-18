@@ -2,7 +2,7 @@
 #include "brique.h"
 #include "coloredbrique.h"
 #include "player.h"
-#include "imageexception.h"
+#include "imageloader.h"
 #include "unistd.h"
 #include <QPainter>
 #include <QPaintEvent>
@@ -11,8 +11,6 @@
 #include <QThread>
 #include <QKeyEvent>
 #include <QDebug>
-
-QImage* loadImage(QString path);
 
 GameWidget::GameWidget(QWidget *parent) : QWidget(parent)
 {
@@ -36,14 +34,6 @@ GameWidget::~GameWidget()
     delete this->somethread;
     delete this->timer;
     delete this->backgroundImage;
-}
-
-QImage* loadImage(QString path) {
-    QPixmap img(path);
-    if (img.isNull()) {
-        throw ImageException();
-    }
-    return new QImage(img.toImage());
 }
 
 void GameWidget::drawBackground() {

@@ -1,6 +1,7 @@
 #include "ball.h"
 #include "constantes.h"
 #include <QRect>
+#include <QDebug>
 
 Ball::Ball(QPointF initPos, double velocity, double angle): IDrawable ()
 {
@@ -27,6 +28,10 @@ double Ball::getAngle() {
 }
 
 void Ball::setAngle(double angle) {
+    qDebug() << "ball angle " << angle;
+    if (angle < 0) {
+        angle = 2*M_PI + angle;
+    }
     this->angle = angle;
 }
 
@@ -45,8 +50,8 @@ void Ball::setVelocity(double v)
 }
 
 void Ball::nextPos() {
-    this->pos.setX(pos.x() + (getVelocity() * cos(-getAngle())));
-    this->pos.setY(pos.y() + (getVelocity() * sin(-getAngle())));
+    this->pos.setX(pos.x() + (getVelocity() * cos(getAngle())));
+    this->pos.setY(pos.y() + (getVelocity() * -sin(getAngle())));
 }
 
 void Ball::setColor(QColor color) {

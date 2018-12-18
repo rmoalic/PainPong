@@ -99,13 +99,22 @@ void GameLogic::checkCollisionBallWall()
 
 void GameLogic::checkCollisionBallVoid()
 {
-    if(gm->b1->getPosCenter().ry() <= 0 || gm->b1->getPosCenter().ry() >= window_size.height())
+    const int SCORE = 100;
+    if(gm->b1->getPosCenter().ry() <= 0)
     {
         gm->b1->reset();
+        gm->score_board->setScore1(gm->score_board->getScore1() - SCORE);
+    } else if (gm->b1->getPosCenter().ry() >= window_size.height()) {
+        gm->b1->reset();
+        gm->score_board->setScore2(gm->score_board->getScore2() - SCORE);
     }
-    if(gm->b2->getPosCenter().ry() <= 0 || gm->b2->getPosCenter().ry() >= window_size.height())
+    if(gm->b2->getPosCenter().ry() <= 0)
     {
         gm->b2->reset();
+        gm->score_board->setScore1(gm->score_board->getScore1() - SCORE);
+    } else if (gm->b2->getPosCenter().ry() >= window_size.height()) {
+        gm->b2->reset();
+        gm->score_board->setScore2(gm->score_board->getScore2() - SCORE);
     }
 }
 
