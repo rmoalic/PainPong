@@ -2,7 +2,7 @@
 #include "constantes.h"
 #include "imageloader.h"
 #include <QtDebug>
-#define PAS 5
+#define SPEED 500
 
 Player::Player(Position boardPosition, QSize window_size) {
     this->window_size = window_size;
@@ -12,16 +12,18 @@ Player::Player(Position boardPosition, QSize window_size) {
     this->player_sprite = loadImage(":/player.png");
 }
 
-void Player::moveLeft() {
-    if (this->racketPosition - PAS >= 0)
-        this->racketPosition -= PAS;
+void Player::moveLeft(qint64 time_elapsed) {
+    double speed = SPEED * (time_elapsed/1000.0);
+    if (this->racketPosition - speed >= 0)
+        this->racketPosition -= speed;
     else
         this->racketPosition = 0;
 }
 
-void Player::moveRight() {
-    if (this->racketPosition + getRacketSize().width() + PAS < window_size.width())
-        this->racketPosition += PAS;
+void Player::moveRight(qint64 time_elapsed) {
+    double speed = SPEED * (time_elapsed/1000.0);
+    if (this->racketPosition + getRacketSize().width() + speed < window_size.width())
+        this->racketPosition += speed;
     else
         this->racketPosition = window_size.width() - getRacketSize().width();
 }
@@ -35,7 +37,7 @@ Player::Position Player::getBoardPosition() {
     return boardPosition;
 }
 
-int Player::getRacketPosition() {
+double Player::getRacketPosition() {
     return racketPosition;
 }
 

@@ -49,9 +49,10 @@ void Ball::setVelocity(double v)
     this->velocity = v;
 }
 
-void Ball::nextPos() {
-    this->pos.setX(pos.x() + (getVelocity() * cos(getAngle())));
-    this->pos.setY(pos.y() + (getVelocity() * -sin(getAngle())));
+void Ball::nextPos(qint64 time_elapsed) {
+    double speed = getVelocity() * (time_elapsed/1000.0);
+    this->pos.setX(pos.x() + (speed * cos(getAngle())));
+    this->pos.setY(pos.y() + (speed * -sin(getAngle())));
 }
 
 void Ball::setColor(QColor color) {

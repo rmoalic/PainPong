@@ -3,7 +3,9 @@
 #include <algorithm>
 #include <QtDebug>
 #include <QThread>
+#include <QDateTime>
 
+#define FIXED_TIMEDELTA 5
 
 GameLogic::GameLogic(QSize window_size, GameModel* gm) : QObject ()
 {
@@ -13,10 +15,13 @@ GameLogic::GameLogic(QSize window_size, GameModel* gm) : QObject ()
     this->somethread = new QThread(this);
     this->somethread->setParent(this);
     this->timer->setParent(this->somethread);
-    this->timer->setInterval(5);
+    this->timer->setInterval(FIXED_TIMEDELTA);
     connect(this->somethread, SIGNAL(started()), this->timer, SLOT(start()));
     connect(this->timer, SIGNAL(timeout()), this, SLOT(tick()));
     this->somethread->start();
+
+    this->last_time = QDateTime::currentMSecsSinceEpoch();
+    this->time_acc = 0;
 }
 
 GameLogic::~GameLogic()
@@ -204,32 +209,39 @@ void GameLogic::checkCollisionBallBrique(Brique* brique)
 }
 
 void GameLogic::move() {
-    gm->b1->nextPos();
-    gm->b2->nextPos();
+    gm->b1->nextPos(FIXED_TIMEDELTA);
+    gm->b2->nextPos(FIXED_TIMEDELTA);
 
     if (this->gm->keys[Qt::Key_A]) {
-        gm->p1->moveLeft();
+        gm->p1->moveLeft(FIXED_TIMEDELTA);
     }
     if (this->gm->keys[Qt::Key_E]) {
-        gm->p1->moveRight();
+        gm->p1->moveRight(FIXED_TIMEDELTA);
     }
     if (this->gm->keys[Qt::Key_I]) {
-        gm->p2->moveLeft();
+        gm->p2->moveLeft(FIXED_TIMEDELTA);
     }
     if (this->gm->keys[Qt::Key_P]) {
-        gm->p2->moveRight();
+        gm->p2->moveRight(FIXED_TIMEDELTA);
     }
 }
 
 void GameLogic::tick()
 {
-    GameLogic::move();
-    GameLogic::checkCollisionBallPlayer();
-    GameLogic::checkCollisionBallWall();
-    GameLogic::checkCollisionBallVoid();
-    std::vector<Brique*>::iterator it;
-    for(it = gm->briques.begin(); it != gm->briques.end(); it++)
-    {
-        GameLogic::checkCollisionBallBrique(*it);
+    qint64 time = QDateTime::currentMSecsSinceEpoch();
+    qint64 elapsed = time - last_time;
+    time_acc += elapsed;
+    last_time = time;
+    while (time_acc >= FIXED_TIMEDELTA) {
+        GameLogic::move();
+        GameLogic::checkCollisionBallPlayer();
+        GameLogic::checkCollisionBallWall();
+        GameLogic::checkCollisionBallVoid();
+        std::vector<Brique*>::iterator it;
+        for(it = gm->briques.begin(); it != gm->briques.end(); it++)
+        {
+            GameLogic::checkCollisionBallBrique(*it);
+        }
+        time_acc -= FIXED_TIMEDELTA;
     }
 }

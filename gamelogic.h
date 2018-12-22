@@ -22,6 +22,8 @@ private:
     QThread* somethread;
     QSize window_size;
     GameModel* gm;
+    qint64 last_time;
+    qint64 time_acc;
     void checkCollisionBallPlayer();
     void checkCollisionBallWall();
     void checkCollisionBallVoid();

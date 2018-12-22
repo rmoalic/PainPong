@@ -15,7 +15,7 @@ public:
     void setAngle(double angle);
     void reset();
     void setVelocity(double v);
-    void nextPos();
+    void nextPos(qint64 time_elapsed);
     void setColor(QColor);
     void draw(QPainter* paint);
 private:
