@@ -13,7 +13,7 @@ GameLogic::GameLogic(QSize window_size, GameModel* gm) : QObject ()
     this->somethread = new QThread(this);
     this->somethread->setParent(this);
     this->timer->setParent(this->somethread);
-    this->timer->setInterval(10);
+    this->timer->setInterval(5);
     connect(this->somethread, SIGNAL(started()), this->timer, SLOT(start()));
     connect(this->timer, SIGNAL(timeout()), this, SLOT(tick()));
     this->somethread->start();
@@ -203,8 +203,27 @@ void GameLogic::checkCollisionBallBrique(Brique* brique)
     }
 }
 
+void GameLogic::move() {
+    gm->b1->nextPos();
+    gm->b2->nextPos();
+
+    if (this->gm->keys[Qt::Key_A]) {
+        gm->p1->moveLeft();
+    }
+    if (this->gm->keys[Qt::Key_E]) {
+        gm->p1->moveRight();
+    }
+    if (this->gm->keys[Qt::Key_I]) {
+        gm->p2->moveLeft();
+    }
+    if (this->gm->keys[Qt::Key_P]) {
+        gm->p2->moveRight();
+    }
+}
+
 void GameLogic::tick()
 {
+    GameLogic::move();
     GameLogic::checkCollisionBallPlayer();
     GameLogic::checkCollisionBallWall();
     GameLogic::checkCollisionBallVoid();

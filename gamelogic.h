@@ -27,6 +27,7 @@ private:
     void checkCollisionBallVoid();
     void checkCollisionBallBrique(Brique*);
     bool collideBallPlayer(Ball* b, Player* p);
+    void move();
 private slots:
     void tick();
 };

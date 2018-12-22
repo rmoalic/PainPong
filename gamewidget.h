@@ -6,21 +6,18 @@
 #include "gamemodel.h"
 #include <QWidget>
 #include <QPainter>
-#include <QMap>
 #include <vector>
 
 class GameWidget : public QWidget
 {
     Q_OBJECT
 public:
-    QMap<int, bool> keys;
     explicit GameWidget(QWidget *parent = nullptr);
     ~GameWidget();
     void setModel(GameModel* gm);
     QPainter painter();
     void on_pushButton_clicked();
     void paintEvent(QPaintEvent *);
-    void move();
     void drawBackground();
 private:
     GameModel* gm;

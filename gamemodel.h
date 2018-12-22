@@ -6,6 +6,7 @@
 #include "coloredbrique.h"
 #include "scoreboard.h"
 #include <vector>
+#include <QMap>
 
 class GameModel
 {
@@ -17,6 +18,7 @@ public:
     Ball* b2;
     std::vector<Brique*> briques;
     ScoreBoard* score_board;
+    QMap<int, bool> keys;
 private:
     std::vector<Brique*> initBriques();
 };

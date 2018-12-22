@@ -49,34 +49,15 @@ void GameWidget::setModel(GameModel* gm) {
 }
 
 void GameWidget::keyPressEvent(QKeyEvent* event) {
-    keys[event->key()] = true;
+    this->gm->keys[event->key()] = true;
 }
 
 void GameWidget::keyReleaseEvent(QKeyEvent* event) {
-    keys[event->key()] = false;
-}
-
-void GameWidget::move() {
-    gm->b1->nextPos();
-    gm->b2->nextPos();
-
-    if (keys[Qt::Key_A]) {
-        gm->p1->moveLeft();
-    }
-    if (keys[Qt::Key_E]) {
-        gm->p1->moveRight();
-    }
-    if (keys[Qt::Key_I]) {
-        gm->p2->moveLeft();
-    }
-    if (keys[Qt::Key_P]) {
-        gm->p2->moveRight();
-    }
+    this->gm->keys[event->key()] = false;
 }
 
 void GameWidget::paintEvent(QPaintEvent * )
 {
-    move(); // move the players and balls
     drawBackground();
     QPainter painter(this);
 
