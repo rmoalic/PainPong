@@ -1,5 +1,6 @@
 #include "gamelogic.h"
 #include "unistd.h"
+#include <math.h>
 #include <algorithm>
 #include <QtDebug>
 #include <QThread>
@@ -28,8 +29,9 @@ GameLogic::~GameLogic()
 {
     this->timer->stop();
     this->somethread->exit();
-    delete this->somethread;
+    while (this->somethread->isRunning()) {}
     delete this->timer;
+    delete this->somethread;
 }
 
 bool GameLogic::collideBallPlayer(Ball* b, Player* p)
@@ -125,10 +127,14 @@ void GameLogic::checkCollisionBallVoid()
 
 bool collisionBrique(Ball* b, Brique* brique)
 {
-    return (b->getPosCenter().ry() - 25/2 >= brique->getRepr().y() || b->getPosCenter().ry() + 25/2 >= brique->getRepr().y()) &&
-            (b->getPosCenter().ry() - 25/2 <= brique->getRepr().y() + brique->getRepr().height() || b->getPosCenter().ry() + 25/2 <= brique->getRepr().y() + brique->getRepr().height()) &&
-            (b->getPosCenter().rx() - 25/2 >= brique->getRepr().x() || b->getPosCenter().rx() + 25/2 >= brique->getRepr().x()) &&
-            (b->getPosCenter().rx() - 25/2 <= brique->getRepr().x() + brique->getRepr().width() || b->getPosCenter().rx() + 25/2 <= brique->getRepr().x() + brique->getRepr().width());
+    double r = 25/2;
+    double bc_y = b->getPosCenter().ry();
+    double bc_x = b->getPosCenter().rx();
+    QRectF brique_r = brique->getRepr();
+    return (bc_y - r >= brique_r.y() || bc_y + r >= brique_r.y()) &&
+           (bc_y - r <= brique_r.y() + brique_r.height() || bc_y + r <= brique_r.y() + brique_r.height()) &&
+           (bc_x - r >= brique_r.x() || bc_x + r >= brique_r.x()) &&
+           (bc_x - r <= brique_r.x() + brique_r.width() || bc_x + r <= brique_r.x() + brique_r.width());
 }
 
 double nextAngle(Ball* b, Brique* br) {

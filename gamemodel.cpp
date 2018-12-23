@@ -1,4 +1,5 @@
 #include "gamemodel.h"
+#include <math.h>
 #include <QDebug>
 
 GameModel::GameModel(QSize window_size)
@@ -12,6 +13,21 @@ GameModel::GameModel(QSize window_size)
     this->score_board = new ScoreBoard();
     this->window_size = window_size;
     this->briques = initBriques();
+}
+
+GameModel::~GameModel() {
+    delete b1;
+    delete b2;
+    delete p1;
+    delete p2;
+    delete score_board;
+    std::vector<Brique*>::iterator myit;
+    for(myit = briques.begin();
+            myit != briques.end();
+            myit++)
+    {
+        delete *myit;
+    }
 }
 
 std::vector<Brique*> GameModel::initBriques() {

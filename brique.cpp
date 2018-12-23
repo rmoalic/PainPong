@@ -1,4 +1,5 @@
 #include "brique.h"
+#include <math.h>
 #include <vector>
 
 std::vector<double> computeCornerAngle(QRectF repr) {
@@ -41,8 +42,4 @@ QString Brique::getDestroyedText()
 
 double Brique::getCornerAngle(unsigned int angleNb) {
     return this->corners[angleNb];
-}
-
-Brique::~Brique()
-{
 }

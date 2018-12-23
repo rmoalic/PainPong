@@ -23,6 +23,7 @@ void MainWindow::start() {
 MainWindow::~MainWindow()
 {
     delete ui->widget;
+    delete ui->score;
     delete ui;
     delete model;
     delete logic;

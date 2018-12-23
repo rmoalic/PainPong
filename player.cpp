@@ -12,6 +12,10 @@ Player::Player(Position boardPosition, QSize window_size) {
     this->player_sprite = loadImage(":/player.png");
 }
 
+Player::~Player() {
+    delete player_sprite;
+}
+
 void Player::moveLeft(qint64 time_elapsed) {
     double speed = SPEED * (time_elapsed/1000.0);
     if (this->racketPosition - speed >= 0)

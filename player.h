@@ -7,6 +7,7 @@ class Player : public IDrawable
 public:
     enum Position {TOP, BOTTOM};
     Player(Position boardPosition, QSize window_size);
+    ~Player();
 
     void moveLeft(qint64 time_elapsed);
     void moveRight(qint64 time_elapsed);

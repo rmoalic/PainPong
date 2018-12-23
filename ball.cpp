@@ -1,5 +1,6 @@
 #include "ball.h"
 #include "constantes.h"
+#include <math.h>
 #include <QRect>
 #include <QDebug>
 

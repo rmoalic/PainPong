@@ -16,7 +16,6 @@ public:
     virtual QString getDestroyedText();
     double getCornerAngle(unsigned int angleNb);
     void draw(QPainter* paint);
-    virtual ~Brique();
 protected:
     QRectF repr;
     int value;

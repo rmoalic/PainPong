@@ -18,6 +18,12 @@ ScoreBoardWidget::ScoreBoardWidget(QWidget *parent) : QWidget(parent)
     this->setStyleSheet("background-color:black;");
 }
 
+ScoreBoardWidget::~ScoreBoardWidget() {
+    delete layout;
+    delete score1;
+    delete score2;
+}
+
 void ScoreBoardWidget::setScore1(int score) {
     this->score1->setText("Player 1:" + QString::number(score));
 }

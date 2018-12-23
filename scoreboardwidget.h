@@ -10,6 +10,7 @@ class ScoreBoardWidget : public QWidget
     Q_OBJECT
 public:
     ScoreBoardWidget(QWidget *parent);
+    ~ScoreBoardWidget();
 private:
     QHBoxLayout* layout;
     QLabel* score1;

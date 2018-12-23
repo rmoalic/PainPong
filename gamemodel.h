@@ -12,6 +12,7 @@ class GameModel
 {
 public:
     GameModel(QSize);
+    ~GameModel();
     Player* p1;
     Player* p2;
     Ball* b1;

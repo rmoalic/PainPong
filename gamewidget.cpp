@@ -31,8 +31,9 @@ GameWidget::~GameWidget()
 {
     this->timer->stop();
     this->somethread->exit();
-    delete this->somethread;
+    while (this->somethread->isRunning()) {}
     delete this->timer;
+    delete this->somethread;
     delete this->backgroundImage;
 }
 
