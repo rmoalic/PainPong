@@ -19,6 +19,7 @@ public:
     std::vector<Brique*> briques;
     ScoreBoard* score_board;
     QMap<int, bool> keys;
+    QSize window_size;
 private:
     std::vector<Brique*> initBriques();
 };
