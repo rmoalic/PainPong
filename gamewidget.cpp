@@ -61,11 +61,6 @@ void GameWidget::paintEvent(QPaintEvent * )
     drawBackground();
     QPainter painter(this);
 
-    gm->p1->draw(&painter);
-    gm->p2->draw(&painter);
-
-    gm->b1->draw(&painter);
-    gm->b2->draw(&painter);
     std::vector<Brique*>::iterator myit;
     for(myit = gm->briques.begin();
             myit != gm->briques.end();
@@ -73,5 +68,10 @@ void GameWidget::paintEvent(QPaintEvent * )
     {
         (*myit)->draw(&painter);
     }
+    gm->p1->draw(&painter);
+    gm->p2->draw(&painter);
+
+    gm->b1->draw(&painter);
+    gm->b2->draw(&painter);
 }
 
