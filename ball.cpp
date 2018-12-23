@@ -64,4 +64,10 @@ void Ball::draw(QPainter* paint) {
     path.addEllipse(pos.x(), pos.y(), 25, 25);
     paint->setPen(Qt::NoPen);
     paint->fillPath(path, QBrush(this->color));
+
+#ifdef QT_DEBUG
+    paint->setPen(QPen(Qt::yellow, 4));
+    paint->drawLine(QLineF(getPosCenter().rx(), getPosCenter().ry(),
+                           getPosCenter().rx() + 25 * cos(getAngle()), getPosCenter().ry() + 25 * -sin(getAngle())));
+#endif
 }
