@@ -185,6 +185,7 @@ void GameLogic::checkCollisionBallBrique(Brique* brique)
         double angle = nextAngle(gm->b1, brique);
         //qDebug() << "nextangle";
         //qDebug() << angle;
+        brique--;
         gm->b1->setAngle(angle);
         gm->score_board->setScore1(gm->score_board->getScore1() + brique->getValue());
     }
@@ -193,9 +194,9 @@ void GameLogic::checkCollisionBallBrique(Brique* brique)
         double angle = nextAngle(gm->b2, brique);
         //qDebug() << "nextangle";
         //qDebug() << angle;
+        brique--;
         gm->b2->setAngle(angle);
         gm->score_board->setScore2(gm->score_board->getScore2() + brique->getValue());
-
     }
 }
 
