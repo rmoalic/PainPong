@@ -67,3 +67,10 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     ressourses.qrc
+
+dox.target = doc
+dox.commands = doxygen Doxyfile; \
+    cp screen.png html/
+dox.depends =
+
+QMAKE_EXTRA_UNIX_TARGETS += dox

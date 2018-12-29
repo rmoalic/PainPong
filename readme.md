@@ -39,4 +39,7 @@ Il suffira alors de cliquer sur le bouton Play vert pour compiler et executer le
 # Documentation
 
 La documentation du projet est écrite pour [Doxygen](http://www.doxygen.nl/) pour la générer il sufit de d'installer l'outil et 
-executer la commande ```doxygen .```
+executer la commande ```doxygen Doxyfile```
+La documentation ce trouvera alors dans le dossier html.
+
+> sous linux la comande make doc permet de générer la documentation.
