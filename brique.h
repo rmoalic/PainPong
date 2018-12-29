@@ -14,10 +14,12 @@ public:
     int getValue();
     virtual QString getDestroyedText();
     void draw(QPainter* paint);
-    void operator--();
+    bool isAlive();
+    Brique operator--(int);
 protected:
     QRectF repr;
     int value;
+    int destroyed_state;
 };
 
 #endif // BRIQUE_H

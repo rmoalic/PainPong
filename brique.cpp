@@ -5,6 +5,7 @@ Brique::Brique(double x, double y, int size_x, int size_y, int points)
 {
     this->repr = QRectF(x, y, size_x, size_y);
     this->value = points;
+    this->destroyed_state = 2;
 }
 
 const QRectF Brique::getRepr()
@@ -24,12 +25,17 @@ void Brique::draw(QPainter* paint) {
     paint->fillPath(path, QBrush(Qt::black));
 }
 
+bool Brique::isAlive() {
+    return destroyed_state > 0;
+}
+
 QString Brique::getDestroyedText()
 {
     return "Brique destroyed";
 }
 
-void Brique::operator--()
+Brique Brique::operator--(int)
 {
-    //ajouter la notion de niveau de brique (introduire plusieurs couleurs dans les briques colorées
+    this->destroyed_state--;
+    return *this;
 }
