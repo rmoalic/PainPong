@@ -22,7 +22,9 @@ void Brique::draw(QPainter* paint) {
     QPainterPath path;
     path.addRect(repr);
     paint->setPen(Qt::NoPen);
-    paint->fillPath(path, QBrush(Qt::black));
+    paint->fillPath(path, QBrush(QColor(Qt::black)));
+    if (destroyed_state == 1)
+    	paint->drawImage(repr, *brique1);
 }
 
 bool Brique::isAlive() {

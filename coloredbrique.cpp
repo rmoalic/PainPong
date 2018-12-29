@@ -18,6 +18,8 @@ void ColoredBrique::draw(QPainter* paint) {
     path.addRect(repr);
     paint->setPen(Qt::NoPen);
     paint->fillPath(path, QBrush(color));
+    if (destroyed_state == 1)
+    	paint->drawImage(repr, *brique1);
 }
 
 
