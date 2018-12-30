@@ -4,6 +4,10 @@
 
 using namespace std;
 
+/**
+ * This exception expresses an error that occured 
+ * while loading an image.
+ */
 class ImageException : public exception
 {
 public:

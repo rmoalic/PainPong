@@ -4,6 +4,12 @@
 #include <QImage>
 #include <QPixmap>
 
-QImage* loadImage(QString);
+/**
+ * Loads an image from the ressources or the filesystem.
+ * Precede with ':' if your file comes from the ressources
+ *
+ * \param path the path to the desired image
+ */
+QImage* loadImage(QString path);
 
 #endif // IMAGELOADER_H
