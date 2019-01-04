@@ -32,6 +32,7 @@ SOURCES += \
     coloredbrique.cpp \
     player.cpp \
     ball.cpp \
+    text.cpp \
     gamelogic.cpp \
     scoreboard.cpp \
     gamemodel.cpp \
@@ -47,7 +48,9 @@ HEADERS += \
     coloredbrique.h \
     player.h \
     ball.h \
+    text.h \
     idrawable.h \
+    idrawabletemp.h \
     gamelogic.h \
     scoreboard.h \
     constantes.h \

@@ -1,4 +1,5 @@
 #include "gamelogic.h"
+#include "text.h"
 #include "unistd.h"
 #include <math.h>
 #include <algorithm>
@@ -20,6 +21,10 @@ GameLogic::GameLogic(QSize window_size, GameModel* gm) : QObject ()
     connect(this->somethread, SIGNAL(started()), this->timer, SLOT(start()));
     connect(this->timer, SIGNAL(timeout()), this, SLOT(tick()));
     this->somethread->start();
+
+    this->gm->toDraw(new Text("Bon jeu !",3000, 70, 100, 50, Qt::darkBlue));
+    this->gm->toDraw(new Text("Joueur1: A et E",3000, 120, 140, 20, Qt::blue));
+    this->gm->toDraw(new Text("Joueur2: I et P",3000, 120, 180, 20, Qt::blue));
 
     this->last_time = QDateTime::currentMSecsSinceEpoch();
     this->time_acc = 0;

@@ -44,3 +44,21 @@ std::vector<Brique*> GameModel::initBriques() {
     }
     return brique;
 }
+
+std::vector<IDrawableTemp*> GameModel::getToDraw(qint64 time_elapsed) {
+    std::vector<IDrawableTemp*>::iterator myit;
+    for (myit = to_draw.begin(); myit != to_draw.end(); )
+    {
+        (*myit)->setRemainingTime((*myit)->getRemainingTime() - time_elapsed);
+	if ((*myit)->getRemainingTime() <= 0) {
+            myit = to_draw.erase(myit);
+	} else {
+            myit++;
+	}
+    }
+    return to_draw;
+}
+
+void GameModel::toDraw(IDrawableTemp* t) {
+    to_draw.push_back(t);
+}

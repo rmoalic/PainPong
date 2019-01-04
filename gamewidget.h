@@ -24,6 +24,7 @@ private:
     QThread* somethread;
     QTimer *timer;
     QImage* backgroundImage;
+    qint64 last_update;
 
 protected:
   virtual void  keyPressEvent(QKeyEvent *event);

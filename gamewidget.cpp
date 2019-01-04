@@ -11,6 +11,7 @@
 #include <QThread>
 #include <QKeyEvent>
 #include <QDebug>
+#include <QDateTime>
 
 GameWidget::GameWidget(QWidget *parent) : QWidget(parent)
 {
@@ -45,6 +46,7 @@ void GameWidget::drawBackground() {
 
 void GameWidget::setModel(GameModel* gm) {
     this->gm = gm;
+    this->last_update = QDateTime::currentMSecsSinceEpoch();
     if (! this->somethread->isRunning())
         this->somethread->start();
 }
@@ -59,6 +61,10 @@ void GameWidget::keyReleaseEvent(QKeyEvent* event) {
 
 void GameWidget::paintEvent(QPaintEvent * )
 {
+    qint64 time = QDateTime::currentMSecsSinceEpoch();
+    qint64 time_diff = time - this->last_update;
+    this->last_update = time;
+
     drawBackground();
     QPainter painter(this);
 
@@ -74,5 +80,14 @@ void GameWidget::paintEvent(QPaintEvent * )
 
     gm->b1->draw(&painter);
     gm->b2->draw(&painter);
+
+    std::vector<IDrawableTemp*> td = gm->getToDraw(time_diff);
+    std::vector<IDrawableTemp*>::iterator it;
+    for(it = td.begin();
+            it != td.end();
+            it++)
+    {
+        (*it)->draw(&painter);
+    }
 }
 

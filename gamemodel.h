@@ -5,6 +5,7 @@
 #include "brique.h"
 #include "coloredbrique.h"
 #include "scoreboard.h"
+#include "idrawabletemp.h"
 #include <vector>
 #include <QMap>
 
@@ -21,7 +22,10 @@ public:
     ScoreBoard* score_board;
     QMap<int, bool> keys;
     QSize window_size;
+    void toDraw(IDrawableTemp* d);
+    std::vector<IDrawableTemp*> getToDraw(qint64 time_elapsed);
 private:
+    std::vector<IDrawableTemp*> to_draw;
     std::vector<Brique*> initBriques();
 };
 
