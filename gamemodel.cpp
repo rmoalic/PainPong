@@ -38,7 +38,7 @@ std::vector<Brique*> GameModel::initBriques() {
         int x = (qrand() % (window_size.width() - 70)) + 35;
         int y = (qrand() % (window_size.height() - 150)) + 50;
         if (qrand() % 5 == 0)
-            brique.push_back(new ColoredBrique(x,y,50,35,5));
+            brique.push_back(new ColoredBrique(x,y,50,35,10));
         else
             brique.push_back(new Brique(x,y,50,35,5));
     }

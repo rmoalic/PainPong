@@ -22,9 +22,8 @@ GameLogic::GameLogic(QSize window_size, GameModel* gm) : QObject ()
     connect(this->timer, SIGNAL(timeout()), this, SLOT(tick()));
     this->somethread->start();
 
-    this->gm->toDraw(new Text("Bon jeu !",3000, 70, 100, 50, Qt::darkBlue));
-    this->gm->toDraw(new Text("Joueur1: A et E",3000, 120, 140, 20, Qt::blue));
-    this->gm->toDraw(new Text("Joueur2: I et P",3000, 120, 180, 20, Qt::blue));
+    this->gm->toDraw(new Text("Player 1: A and E",3000, 120, 140, 20, Qt::blue));
+    this->gm->toDraw(new Text("Player 2: I and P",3000, 120, 180, 20, Qt::blue));
 
     this->last_time = QDateTime::currentMSecsSinceEpoch();
     this->time_acc = 0;
@@ -37,6 +36,19 @@ GameLogic::~GameLogic()
     while (this->somethread->isRunning()) {}
     delete this->timer;
     delete this->somethread;
+}
+
+void GameLogic::endGame() {
+    int score1 = this->gm->score_board->getScore1();
+    int score2 = this->gm->score_board->getScore2();
+    this->timer->stop();
+    if (score1 > score2) {
+        this->gm->toDraw(new Text("Player 1 WIN",10000, 70, 150, 35, Qt::green));
+    } else if (score2 > score1) {
+        this->gm->toDraw(new Text("Player 2 WIN",10000, 70, 150, 35, Qt::red));
+    } else {
+        this->gm->toDraw(new Text("It's a draw",10000, 70, 150, 35, Qt::gray));
+    }
 }
 
 bool GameLogic::collideBallPlayer(Ball* b, Player* p)
@@ -111,7 +123,7 @@ void GameLogic::checkCollisionBallWall()
 
 void GameLogic::checkCollisionBallVoid()
 {
-    const int SCORE = 100;
+    const int SCORE = 15;
     if(gm->b1->getPosCenter().ry() <= 0)
     {
         gm->b1->reset();
@@ -192,7 +204,8 @@ void GameLogic::checkCollisionBallBrique(Brique* brique)
         //qDebug() << angle;
         (*brique)--;
         gm->b1->setAngle(angle);
-        gm->score_board->setScore1(gm->score_board->getScore1() + brique->getValue());
+	if (!brique->isAlive())
+            gm->score_board->setScore1(gm->score_board->getScore1() + brique->getValue());
     }
     if(collisionBrique(gm->b2, brique))
     {
@@ -201,7 +214,8 @@ void GameLogic::checkCollisionBallBrique(Brique* brique)
         //qDebug() << angle;
         (*brique)--;
         gm->b2->setAngle(angle);
-        gm->score_board->setScore2(gm->score_board->getScore2() + brique->getValue());
+	if (!brique->isAlive())
+            gm->score_board->setScore2(gm->score_board->getScore2() + brique->getValue());
     }
 }
 
@@ -244,6 +258,9 @@ void GameLogic::tick()
 		++it;
 	    }
         }
+	if (gm->briques.empty()) {
+	    endGame();
+	}
         time_acc -= FIXED_TIMEDELTA;
     }
 }
