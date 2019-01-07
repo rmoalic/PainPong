@@ -14,7 +14,7 @@ Le jeu se termine quand il n'y a plus de briques à l'ecran.
 
 # Compilation
 
-Le jeu a été tester sur Windows et Linux, il devrait néanmoins fonctionner sans problème sur mac OS et BSD.
+Le jeu a été testé sur Windows et Linux, il devrait néanmoins fonctionner sans problème sur mac OS et BSD.
 
 il est écrit en c++ et dépend de Qt4+. Les compilateurs utilisés lors du développement sont GNU g++ 6.3 et 5.3.
 
@@ -38,7 +38,7 @@ Il suffira alors de cliquer sur le bouton Play vert pour compiler et executer le
 
 # Documentation
 
-La documentation du projet est écrite pour [Doxygen](http://www.doxygen.nl/) pour la générer il sufit de d'installer l'outil et 
+La documentation du projet est écrite pour [Doxygen](http://www.doxygen.nl/) pour la générer il suffit de d'installer l'outil et 
 executer la commande ```doxygen Doxyfile```
 La documentation ce trouvera alors dans le dossier html.
 
