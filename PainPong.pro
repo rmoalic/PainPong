@@ -36,7 +36,6 @@ SOURCES += \
     gamelogic.cpp \
     scoreboard.cpp \
     gamemodel.cpp \
-    powerup.cpp \
     scoreboardwidget.cpp \
     imageexception.cpp \
     imageloader.cpp
@@ -55,7 +54,6 @@ HEADERS += \
     scoreboard.h \
     constantes.h \
     gamemodel.h \
-    powerup.h \
     scoreboardwidget.h \
     imageexception.h \
     imageloader.h

@@ -5,5 +5,5 @@ ImageException::ImageException() : exception()
 
 }
 const char * ImageException::what() const throw() {
-   return "Image no found";
+   return "Image not found";
 }
