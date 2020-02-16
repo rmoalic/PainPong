@@ -12,5 +12,10 @@ Text::Text(QString s, qint64 time, int x, int y, int size, QColor color) {
 void Text::draw(QPainter *paint) {
    paint->setPen(color);
    paint->setFont(QFont("Helvetica [Cronyx]", size));
+
+   QBrush bbrush(Qt::white);
+   paint->setBackground(bbrush);
+   paint->setBackgroundMode(Qt::OpaqueMode);
+
    paint->drawText(point, text);
 }
