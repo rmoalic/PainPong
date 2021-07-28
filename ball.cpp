@@ -3,6 +3,7 @@
 #include <math.h>
 #include <QRect>
 #include <QDebug>
+#include <QPainterPath>
 
 Ball::Ball(QPointF initPos, double velocity, double angle): IDrawable ()
 {

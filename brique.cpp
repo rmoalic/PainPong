@@ -1,5 +1,6 @@
 #include "brique.h"
 #include <math.h>
+#include <QPainterPath>
 
 Brique::Brique(double x, double y, int size_x, int size_y, int points)
 {

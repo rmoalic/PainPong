@@ -1,5 +1,6 @@
 #include "coloredbrique.h"
 #include "brique.h"
+#include <QPainterPath>
 
 ColoredBrique::ColoredBrique(double x, double y, int size_x, int size_y, int points, QColor color)
     : Brique(x, y, size_x, size_y, points)
